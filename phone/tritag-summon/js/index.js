@@ -31,6 +31,25 @@ var _anchor_locations = {
     'c0:98:e5:50:50:44:50:14': [0, 5.424, 2.703]
 };
 
+//HACK FOR FIXING CALIBRATION CONSTANTS
+var _anchor_range_offsets = {
+    'c0:98:e5:50:50:44:50:1d': 2.092-1.85,
+    'c0:98:e5:50:50:44:50:0f': 2.705-2.5,
+    'c0:98:e5:50:50:44:50:19': 2.028-1.63,
+    'c0:98:e5:50:50:44:50:18': 1.902-1.45,
+    'c0:98:e5:50:50:44:50:0a': 1.867-1.313,
+    'c0:98:e5:50:50:44:50:1a': 1.867-1.313, //unmeasured -- too noisy
+    'c0:98:e5:50:50:44:50:17': 1.867-1.313, //unmeasured -- too noisy
+    'c0:98:e5:50:50:44:50:13': 2.244-1.53,
+    'c0:98:e5:50:50:44:50:10': 1.86-1.8,
+    'c0:98:e5:50:50:44:50:0d': 1.917-1.5,
+    'c0:98:e5:50:50:44:50:05': 1.853-1.15,
+    'c0:98:e5:50:50:44:50:0b': 1.888-0.95,
+    'c0:98:e5:50:50:44:50:06': 2-1.7,
+    'c0:98:e5:50:50:44:50:09': 2.315-1.6,
+    'c0:98:e5:50:50:44:50:14': 2.14-1.6
+};
+
 var switch_visibility_console_check = "visible";
 var switch_visibility_steadyscan_check = "visible";
 var steadyscan_on = true;
@@ -49,7 +68,7 @@ function calculate_location (anchor_ranges, anchor_locations) {
     locations = [];
     for (var anchor_id in anchor_ranges) {
         if (anchor_ranges.hasOwnProperty(anchor_id)) {
-            ranges.push(anchor_ranges[anchor_id]);
+            ranges.push(anchor_ranges[anchor_id] - _anchor_range_offsets[anchor_id]);
             locations.push(anchor_locations[anchor_id]);
         }
     }
@@ -178,7 +197,7 @@ function process_raw_buffer (buf) {
                 var loc = calculate_location(ranges, _anchor_locations);
                 var update =  'X: ' + loc[0].toFixed(2) + ';';
                     update += ' Y: ' + loc[1].toFixed(2) + ';';
-                    update += ' Z: ' + loc[2].toFixed(2);
+                    //update += ' Z: ' + loc[2].toFixed(2);
                 app.update_location(update);
             }
         }
