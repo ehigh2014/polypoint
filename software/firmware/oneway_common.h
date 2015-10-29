@@ -35,11 +35,11 @@
 #define NUM_RANGING_LISTENING_WINDOWS 3
 
 // How much time the tag listens on each channel when receiving packets from the anchor
-#define RANGING_LISTENING_WINDOW_US 10000
+#define RANGING_LISTENING_WINDOW_US 100000
 
 // How many slots should be in each listening window for the anchors to respond
 // in.
-#define NUM_RANGING_LISTENING_SLOTS 20
+#define NUM_RANGING_LISTENING_SLOTS 200
 
 // How long the slots inside each window should be for the anchors to choose from
 #define RANGING_LISTENING_SLOT_US (RANGING_LISTENING_WINDOW_US/NUM_RANGING_LISTENING_SLOTS)
